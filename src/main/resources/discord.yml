@@ -1,0 +1,5 @@
+# Your Discord bot token
+bot-token: "your-bot-token"
+
+# Your Discord Channel ID. Must be a text or announcement channel
+channel-id: "0000000000000"

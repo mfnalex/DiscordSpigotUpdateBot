@@ -1,47 +1,58 @@
 package com.jeff_media.discordspigotupdatebot;
 
-import lombok.Getter;
+import com.jeff_media.discordspigotupdatebot.spiget.SpigetAPI;
 
-public enum Plugin {
+import java.util.Map;
+import java.util.Objects;
 
-    ANGELCHEST_PLUS(88214, "AngelChest Plus", "angelchest/64.png"),
-    ANGELCHEST_FREE(60383, "AngelChest Free", "angelchest/64.png"),
-    CHESTSORT(59773, "ChestSort", "chestsort/96.png"),
-    LUMBERJACK(60306, "LumberJack", "lumberjack/256.png"),
-    FILTERED_HOPPERS(96037,"Filtered Hoppers", null),
-    INVUNLOAD(60095,"InvUnload", "invunload/64.png"),
-    AUTOCOMPOSTER(95013,"AutoComposter", null),
-    AUTOSHULKER(89807,"AutoShulker", "autoshulker/64.png"),
-    BETTERTRIDENTS(92656,"BetterTridents", "bettertridents/256.png"),
-    DROP2INVENTORY_PLUS(87784,"Drop2Inventory Plus", "drop2inventory/64.png"),
-    BETTERLOGSTRIP(99456,"BetterLogStrip", "betterlogstrip/256.png"),
-    REPLANT(92668,"RePlant", "replant/256.png"),
-    JUKEBOX_PLUS(87750,"Jukebox Plus", "jukeboxplus/64.png"),
-    DOORS_RELOADED(91722,"Doors Reloaded", "doorsreloaded/64.png"),
-    BESTTOOLS(81490,"BestTools", "besttools/256.png"),
-    LIGHTPERMS(62447,"LightPerms", "lightperms/64.png"),
-    DROP2INVENTORY_FREE(62214,"Drop2Inventory Free", "drop2inventory/64.png");
+public record Plugin(String name, String version, int id, int updateId, int downloadId, String thumbnail) {
 
+    private static final String SPIGOT = "https://www.spigotmc.org/";
 
-    @Getter private final int id;
-    @Getter private final String name;
-    private final String logo;
-
-    public String getLogo() {
-        if(logo == null) return null;
-        return "https://static.jeff-media.com/img/" + logo;
+    public static Plugin fromFile(String name, Map<String,Object> map) {
+        Objects.requireNonNull(name);
+        String version = (String) Objects.requireNonNull(map.get("version"));
+        int id = (int) Objects.requireNonNull(map.get("id"));
+        int updateId = (int) Objects.requireNonNull(map.get("update-id"));
+        int downloadId = (int) Objects.requireNonNull(map.get("download-id"));
+        String thumbnail = (String) map.get("thumbnail");
+        return new Plugin(name, version, id, updateId, downloadId, thumbnail);
     }
 
-    Plugin(int id, String name, String logo) {
-        this.id = id;
-        this.name = name;
-        this.logo = logo;
+    public static Plugin fromSpiget(Plugin plugin) {
+        int id = plugin.id;
+        String name = plugin.name;
+        String thumbnail = plugin.thumbnail;
+        String version = SpigetAPI.getVersion(id);
+        int updateId = SpigetAPI.getUpdateId(id);
+        int downloadId = SpigetAPI.getDownloadId(id);
+        return new Plugin(name, version, id, updateId, downloadId, thumbnail);
     }
 
-    public static Plugin fromId(int id) {
-        for(Plugin plugin : values()) {
-            if(plugin.getId() == id) return plugin;
+    public String getSpigotLink() {
+        return SPIGOT + "resources/" + id + "/";
+    }
+
+    public String getDownloadLink() {
+        return getSpigotLink() + "download?version=" + downloadId;
+    }
+
+    public String getUpdateLink() {
+        return getSpigotLink() + "update?update=" + updateId;
+    }
+
+    public boolean isNewerThan(Plugin oldPlugin) {
+        if(this.id != oldPlugin.id) throw new IllegalArgumentException("Cannot compare two different plugins");
+        if(oldPlugin.downloadId >= this.downloadId) {
+            return false;
         }
-        throw new IllegalArgumentException("No plugin found with ID " + id);
+        if(oldPlugin.updateId >= this.updateId) {
+            return false;
+        }
+        if(oldPlugin.version.equals(this.version)) {
+            return false;
+        }
+        return true;
     }
+
 }
