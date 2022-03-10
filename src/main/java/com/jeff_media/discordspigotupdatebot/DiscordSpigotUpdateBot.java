@@ -176,7 +176,7 @@ public class DiscordSpigotUpdateBot {
             int resourceId = element.getAsJsonObject().getAsJsonPrimitive("id").getAsInt();
             LatestUpdate latestUpdate = getLatestVersion(resourceId);
             String latestVersion = latestUpdate.title();
-            System.out.println(resourceId + ": " + latestVersion);
+            //System.out.println(resourceId + ": " + latestVersion);
             versions.put(resourceId, latestUpdate);
         }
         return versions;
@@ -202,7 +202,13 @@ public class DiscordSpigotUpdateBot {
             eb.setThumbnail(plugin.getLogo());
         }
 
-        jda.getTextChannelById(channelID).sendMessageEmbeds(eb.build()).queue();
+        if(jda.getNewsChannelById(channelID) != null) {
+            jda.getNewsChannelById(channelID).sendMessageEmbeds(eb.build()).queue();
+        } else if(jda.getTextChannelById(channelID) != null) {
+            jda.getTextChannelById(channelID).sendMessageEmbeds(eb.build()).queue();
+        } else {
+            throw new IllegalArgumentException("Could not find news or text channel with ID " + channelID);
+        }
     }
 
     private static String getLink(String url) {
