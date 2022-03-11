@@ -19,17 +19,21 @@ public class UpdateCheckerTask extends TimerTask {
         logger.debug("Checking for updates...");
         for(final String name : plugins.keySet()) {
             final Plugin oldPlugin = plugins.get(name);
-            final Plugin newPlugin = Plugin.fromSpiget(oldPlugin);
-            logger.debug("Got answer for " + name + ": " + newPlugin);
-            if(!newPlugin.isNewerThan(oldPlugin)) continue;
-            logger.info("Found new version for " + newPlugin.name()+":");
-            logger.info("Old version: " + oldPlugin);
-            logger.info("New version: " + newPlugin);
-            plugins.put(name, newPlugin);
-            if(!oldPlugin.version().equals(Plugin.UNDEFINED_VERSION) || main.getConfig().getAnnounceNewPlugins()) {
-                discordManager.sendUpdateEmbed(newPlugin);
+            try {
+                final Plugin newPlugin = Plugin.fromSpiget(oldPlugin);
+                logger.debug("Got answer for " + name + ": " + newPlugin);
+                if (!newPlugin.isNewerThan(oldPlugin)) continue;
+                logger.info("Found new version for " + newPlugin.name() + ":");
+                logger.info("Old version: " + oldPlugin);
+                logger.info("New version: " + newPlugin);
+                plugins.put(name, newPlugin);
+                if (!oldPlugin.version().equals(Plugin.UNDEFINED_VERSION) || main.getConfig().getAnnounceNewPlugins()) {
+                    discordManager.sendUpdateEmbed(newPlugin);
+                }
+                main.savePluginsToFile();
+            } catch (Exception e) {
+                logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.");
             }
-            main.savePluginsToFile();
         }
     }
 }
