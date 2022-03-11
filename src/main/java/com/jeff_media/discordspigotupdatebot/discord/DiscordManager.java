@@ -2,10 +2,12 @@ package com.jeff_media.discordspigotupdatebot.discord;
 
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.config.DiscordConfig;
+import com.jeff_media.discordspigotupdatebot.discord.embed.Embed;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
@@ -35,40 +37,12 @@ public class DiscordManager {
     }
 
     public void sendUpdateEmbed(final Plugin plugin) {
-        final EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Update released: " + plugin.name() + " " + plugin.version(), null);
-        eb.setColor(Color.ORANGE);
-        eb.setDescription("A new update has been released for " + getLink(plugin.getSpigotLink(),plugin.name()) + ". Please update soon.");
-        eb.addField("Plugin",plugin.name(),true);
-        eb.addField("New version",plugin.version(), true);
-        eb.addField("Date",getTime(plugin.timestamp()),true);
-        //eb.addBlankField(true);
-        eb.addField("SpigotMC Link",getLink(plugin.getSpigotLink()), true);
-        eb.addField("Changelog",getLink(plugin.getUpdateLink()), true);
-        eb.addField("Download",getLink(plugin.getDownloadLink()), true);
-
-        eb.setFooter("DiscordSpigotUpdateBot by JEFF Media GbR / mfnalex");
-
-        if(plugin.thumbnail() != null) {
-            eb.setThumbnail(plugin.thumbnail());
-        }
-
+        final MessageEmbed embed = new Embed.Builder(plugin).build();
         final MessageChannel channel = getChannel();
         if(channel == null) {
             throw new IllegalStateException("Channel does not exist anymore");
         }
-        channel.sendMessageEmbeds(eb.build()).queue();
+        channel.sendMessageEmbeds(embed).queue();
     }
 
-    private static String getLink(final String url) {
-        return getLink(url, "Click here");
-    }
-
-    private static String getLink(final String url, final String title) {
-        return "[" + title + "](" + url + ")";
-    }
-
-    private static String getTime(final long timestamp) {
-        return "<t:" + timestamp + ">";
-    }
 }

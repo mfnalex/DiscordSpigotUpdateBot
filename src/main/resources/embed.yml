@@ -1,0 +1,36 @@
+# Available placeholders:
+#   %name%              - Plugin name as defined in plugins.yml, e.g. "AngelChest Plus"
+#   %version%           - Newest version of the plugin, e.g. "7.0.1"
+#   %date%              - Localized time of the last update (shows the correct time zone to every user)
+#   %spigot_link%       - URL to plugin's SpigotMC page
+#   %changelog_link%    - URL to plugin's changelog
+#   %download_link%     - URL to plugin's download
+#   %thumbnail%         - URL to plugin's thumbnail
+
+# You can use links in most places by using [Text](URL).
+# To disable certain things like title, or description, set them to null (WITHOUT quotes).
+
+title: "Update released: %plugin% %version%"
+description:
+  - "A new update has been released for [%name%](%spigot_link%). Please update soon."
+fields:
+  - name: "Plugin"
+    text: "%name%"
+    inline: true
+  - name: "Version"
+    text: "%version%"
+    inline: true
+  - name: "Date"
+    text: "%date%"
+    inline: true
+  - name: "SpigotMC Link"
+    text: "[Click here](%spigot_link%)"
+    inline: true
+  - name: "Changelog"
+    text: "[Click here](%changelog_link%)"
+    inline: true
+  - name: "Download"
+    text: "[Click here](%download_link%)"
+thumbnail: "%thumbnail%"
+footer: "Discord Spigot Update Checker by JEFF Media GbR / mfnalex"
+footer-icon: "https://static.jeff-media.com/img/logo_64_64.png"
