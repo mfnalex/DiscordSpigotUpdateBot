@@ -4,7 +4,7 @@ It uses Spiget.org to fetch version information.
 
 ## Usage
 
-Run the bot using Java 17.0.0 or higher: 
+Run the bot using Java 8 or higher: 
 
 ```shell
 java -jar discord-spigot-update-bot.jar [arguments]
@@ -22,3 +22,9 @@ Available arguments:
 
 ## Screenshots
 ![](https://static.jeff-media.com/img/discord-spigot-update-bot/discord-spigot-update-bot-screenshot1.png)
+
+## Support
+
+Feel free to join my Discord for help.
+
+<a href="https://discord.jeff-media.com"><img src="https://api.jeff-media.com/img/discord1.png"></a>
