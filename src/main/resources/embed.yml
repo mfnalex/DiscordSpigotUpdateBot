@@ -36,4 +36,4 @@ fields:
     inline: true
 thumbnail: "%thumbnail%"
 footer: "Discord Spigot Update Bot by JEFF Media GbR / mfnalex"
-footer-icon: "https://static.jeff-media.com/img/discord-spigot-update-bot/logo.svg"
+footer-icon: null
