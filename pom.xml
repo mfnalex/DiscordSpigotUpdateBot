@@ -14,6 +14,12 @@
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -36,7 +42,7 @@
                     <finalName>discord-spigot-update-bot</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.jeff_media.discordspigotupdatebot.DiscordSpigotUpdateBot</mainClass>
+                            <mainClass>com.jeff_media.discordspigotupdatebot.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

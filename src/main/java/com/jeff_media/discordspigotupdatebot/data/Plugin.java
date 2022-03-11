@@ -1,4 +1,4 @@
-package com.jeff_media.discordspigotupdatebot;
+package com.jeff_media.discordspigotupdatebot.data;
 
 import com.jeff_media.discordspigotupdatebot.spiget.SpigetAPI;
 import lombok.NonNull;
@@ -7,29 +7,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public record Plugin(String name, String version, int id, int updateId, int downloadId, String thumbnail) {
+public record Plugin(String name, String version, int id, int updateId, int downloadId, String thumbnail, long timestamp) {
 
     public static final String UNDEFINED_VERSION = "UNDEFINED";
     private static final SpigetAPI spigetApi = new SpigetAPI();
     private static final String SPIGOT = "https://www.spigotmc.org/";
 
-    public static Plugin deserialize(@NonNull String name, @NonNull Map<String,Object> map) {
-        int id = (int) Objects.requireNonNull(map.get(Serialization.ID));
-        String version = (String) map.getOrDefault(Serialization.VERSION,UNDEFINED_VERSION);
-        int updateId = (int) map.getOrDefault(Serialization.UPDATE_ID,0);
-        int downloadId = (int) map.getOrDefault(Serialization.DOWNLOAD_ID,0);
-        String thumbnail = (String) map.get(Serialization.THUMBNAIL);
-        return new Plugin(name, version, id, updateId, downloadId, thumbnail);
+    public static Plugin deserialize(@NonNull final String name, @NonNull final Map<String,Object> map) {
+        final int id = (int) Objects.requireNonNull(map.get(Serialization.ID));
+        final String version = (String) map.getOrDefault(Serialization.VERSION,UNDEFINED_VERSION);
+        final int updateId = (int) map.getOrDefault(Serialization.UPDATE_ID,0);
+        final int downloadId = (int) map.getOrDefault(Serialization.DOWNLOAD_ID,0);
+        final String thumbnail = (String) map.get(Serialization.THUMBNAIL);
+        return new Plugin(name, version, id, updateId, downloadId, thumbnail, 0);
     }
 
-    public static Plugin fromSpiget(Plugin plugin) {
-        int id = plugin.id;
-        String name = plugin.name;
-        String thumbnail = plugin.thumbnail;
-        String version = spigetApi.getVersion(id);
-        int updateId = spigetApi.getUpdateId(id);
-        int downloadId = spigetApi.getDownloadId(id);
-        return new Plugin(name, version, id, updateId, downloadId, thumbnail);
+    public static Plugin fromSpiget(final Plugin plugin) {
+        final int id = plugin.id;
+        final String name = plugin.name;
+        final String thumbnail = plugin.thumbnail;
+        final String version = spigetApi.getVersion(id);
+        final int downloadId = spigetApi.getDownloadId(id);
+        final PluginUpdate lastUpdate = spigetApi.getUpdate(id);
+        final int updateId = lastUpdate.updateId();
+        final long timestamp = lastUpdate.timestamp();
+        return new Plugin(name, version, id, updateId, downloadId, thumbnail, timestamp);
     }
 
     public String getSpigotLink() {
@@ -44,7 +46,7 @@ public record Plugin(String name, String version, int id, int updateId, int down
         return getSpigotLink() + "update?update=" + updateId;
     }
 
-    public boolean isNewerThan(Plugin oldPlugin) {
+    public boolean isNewerThan(final Plugin oldPlugin) {
         if(this.id != oldPlugin.id) throw new IllegalArgumentException("Cannot compare two different plugins");
         if(oldPlugin.version.equals(UNDEFINED_VERSION) && !this.version.equals(UNDEFINED_VERSION)) {
             return true;
@@ -59,7 +61,7 @@ public record Plugin(String name, String version, int id, int updateId, int down
     }
 
     public Map<String,Object> serialize() {
-        Map<String,Object> map = new HashMap<>();
+        final Map<String,Object> map = new HashMap<>();
         map.put(Serialization.ID,id);
         map.put(Serialization.VERSION,version);
         map.put(Serialization.DOWNLOAD_ID,downloadId);

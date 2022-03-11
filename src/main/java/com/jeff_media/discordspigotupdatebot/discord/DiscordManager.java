@@ -1,6 +1,6 @@
 package com.jeff_media.discordspigotupdatebot.discord;
 
-import com.jeff_media.discordspigotupdatebot.Plugin;
+import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.config.DiscordConfig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -20,7 +20,7 @@ public class DiscordManager {
         try {
             jda = JDABuilder.createDefault(discordConfig.getBotToken()).build();
             jda.awaitReady();
-        } catch (LoginException | InterruptedException e) {
+        } catch (final LoginException | InterruptedException e) {
             throw new IllegalStateException("Could not login to Discord, check your bot-token in discord.yml",e);
         }
         channelId = discordConfig.getChannelId();
@@ -31,22 +31,18 @@ public class DiscordManager {
     }
 
     private MessageChannel getChannel() {
-        /*TextChannel textChannel = jda.getTextChannelById(channelId);
-        if(textChannel != null) return textChannel;
-        NewsChannel newsChannel = jda.getNewsChannelById(channelId);
-        if(newsChannel != null) return newsChannel;
-        return null;*/
         return jda.getChannelById(MessageChannel.class, channelId);
     }
 
-    public void sendUpdateEmbed(Plugin plugin) {
-        EmbedBuilder eb = new EmbedBuilder();
+    public void sendUpdateEmbed(final Plugin plugin) {
+        final EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Update released: " + plugin.name() + " " + plugin.version(), null);
         eb.setColor(Color.ORANGE);
-        eb.setDescription("A new updateId has been released for " + plugin.name() + ". Please update soon.");
+        eb.setDescription("A new update has been released for " + getLink(plugin.getSpigotLink(),plugin.name()) + ". Please update soon.");
         eb.addField("Plugin",plugin.name(),true);
         eb.addField("New version",plugin.version(), true);
-        eb.addBlankField(true);
+        eb.addField("Date",getTime(plugin.timestamp()),true);
+        //eb.addBlankField(true);
         eb.addField("SpigotMC Link",getLink(plugin.getSpigotLink()), true);
         eb.addField("Changelog",getLink(plugin.getUpdateLink()), true);
         eb.addField("Download",getLink(plugin.getDownloadLink()), true);
@@ -62,7 +58,15 @@ public class DiscordManager {
         channel.sendMessageEmbeds(eb.build()).queue();
     }
 
-    private static String getLink(String url) {
-        return "[Click here](" + url + ")";
+    private static String getLink(final String url) {
+        return getLink(url, "Click here");
+    }
+
+    private static String getLink(final String url, final String title) {
+        return "[" + title + "](" + url + ")";
+    }
+
+    private static String getTime(final long timestamp) {
+        return "<t:" + timestamp + ">";
     }
 }
