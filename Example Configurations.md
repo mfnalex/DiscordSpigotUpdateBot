@@ -62,4 +62,5 @@ fields:
     text: "[Click here](%changelog_link%)"
     inline: true
 thumbnail: "%thumbnail%"
+footer: "Please update as soon as possible!"
 ```
