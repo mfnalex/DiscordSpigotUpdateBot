@@ -1,0 +1,15 @@
+# Interval in seconds between checking attempts.
+# Type: Integer
+# Default: 60
+interval: 60
+
+# Minimum delay in milliseconds between Spiget.org requests.
+# Type: Integer
+# Default: 1000
+minimum-delay-between-spiget-requests: 1000
+
+# Whether to announce updates for new plugins.
+# A plugin is considered new if it doesn't have a "version" set it in plugins.yml.
+# Type: boolean
+# Default: false
+announce-new-plugins: false

@@ -1,4 +1,4 @@
-package com.jeff_media.discordspigotupdatebot.discord;
+package com.jeff_media.discordspigotupdatebot.config;
 
 import com.jeff_media.discordspigotupdatebot.util.YamlUtils;
 
@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DiscordConfig {
 
-    private Map<String,Object> config = YamlUtils.loadFile("discord.yml");
+    private final Map<String,Object> config = YamlUtils.loadFile("discord.yml");
 
     public String getBotToken() {
         String botToken = getOrThrow("bot-token");

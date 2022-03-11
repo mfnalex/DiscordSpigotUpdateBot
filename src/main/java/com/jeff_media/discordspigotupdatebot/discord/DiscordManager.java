@@ -1,23 +1,22 @@
 package com.jeff_media.discordspigotupdatebot.discord;
 
 import com.jeff_media.discordspigotupdatebot.Plugin;
+import com.jeff_media.discordspigotupdatebot.config.DiscordConfig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.NewsChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
 
 public class DiscordManager {
 
-    private final DiscordConfig discordConfig = new DiscordConfig();
     private final JDA jda;
     private final String channelId;
 
     public DiscordManager() {
+        final DiscordConfig discordConfig = new DiscordConfig();
         try {
             jda = JDABuilder.createDefault(discordConfig.getBotToken()).build();
             jda.awaitReady();
@@ -32,11 +31,12 @@ public class DiscordManager {
     }
 
     private MessageChannel getChannel() {
-        TextChannel textChannel = jda.getTextChannelById(channelId);
+        /*TextChannel textChannel = jda.getTextChannelById(channelId);
         if(textChannel != null) return textChannel;
         NewsChannel newsChannel = jda.getNewsChannelById(channelId);
         if(newsChannel != null) return newsChannel;
-        return null;
+        return null;*/
+        return jda.getChannelById(MessageChannel.class, channelId);
     }
 
     public void sendUpdateEmbed(Plugin plugin) {
@@ -55,7 +55,11 @@ public class DiscordManager {
             eb.setThumbnail(plugin.thumbnail());
         }
 
-        getChannel().sendMessageEmbeds(eb.build()).queue();
+        final MessageChannel channel = getChannel();
+        if(channel == null) {
+            throw new IllegalStateException("Channel does not exist anymore");
+        }
+        channel.sendMessageEmbeds(eb.build()).queue();
     }
 
     private static String getLink(String url) {

@@ -1,6 +1,14 @@
+# Plugin name. Put in double quotes to use special characters.
+# Type: String
+# REQUIRED
 AngelChest Plus:
+  # Plugin ID (the number at the end of your plugin's SpigotMC URL)
+  # Type: Integer
+  # REQUIRED
   id: 88214
-  version: 7.0.1
-  download-id: 444460
-  update-id: 448380
   thumbnail: "https://static.jeff-media.com/img/angelchest/64.png"
+AngelChest Free:
+  id: 60383
+  thumbnail: "https://static.jeff-media.com/img/angelchest/64.png"
+ChestSort:
+  id: 59773

@@ -1,5 +1,9 @@
-# Your Discord bot token
+# Your Discord bot token. Get it from the Discord Developer Portal.
+# Type: String
+# REQUIRED
 bot-token: "your-bot-token"
 
-# Your Discord Channel ID. Must be a text or announcement channel
-channel-id: "0000000000000"
+# Your Discord Channel ID. Must be a text or announcement channel.
+# Type: String
+# REQUIRED
+channel-id: "0000000000000000"
