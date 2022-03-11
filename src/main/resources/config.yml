@@ -9,7 +9,11 @@ interval: 60
 minimum-delay-between-spiget-requests: 1000
 
 # Whether to announce updates for new plugins.
-# A plugin is considered new if it doesn't have a "version" set it in plugins.yml.
+# A plugin is considered new if it was freshly added to plugins.yml.
 # Type: boolean
 # Default: false
 announce-new-plugins: false
+
+# Whether to announce plugins that have been removed from SpigotMC.
+# A plugin is only considered to be removed if a valid update check for this plugin has succeeded in the past.
+announce-deleted-plugins: true

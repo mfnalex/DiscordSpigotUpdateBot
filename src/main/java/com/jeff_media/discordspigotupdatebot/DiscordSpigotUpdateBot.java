@@ -87,7 +87,9 @@ public class DiscordSpigotUpdateBot {
     public void savePluginsToFile() {
         final Map<String,Object> map = new HashMap<>();
         for(final Map.Entry<String,Plugin> entry : plugins.entrySet()) {
-            map.put(entry.getKey(),entry.getValue().serialize());
+            if(entry.getValue().id()!=-1) { // Do not save deleted plugins
+                map.put(entry.getKey(), entry.getValue().serialize());
+            }
         }
         final File file = new File("plugins.yml");
         try(final FileWriter writer = new FileWriter(file)) {

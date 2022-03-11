@@ -1,3 +1,5 @@
+# This message gets sent to Discord when a new version of a plugin has been found on SpigotMC.
+
 # Available placeholders:
 #   %name%              - Plugin name as defined in plugins.yml, e.g. "AngelChest Plus"
 #   %version%           - Newest version of the plugin, e.g. "7.0.1"
@@ -33,5 +35,5 @@ fields:
     text: "[Click here](%download_link%)"
     inline: true
 thumbnail: "%thumbnail%"
-footer: "Discord Spigot Update Checker by JEFF Media GbR / mfnalex"
-footer-icon: "https://static.jeff-media.com/img/logo_64_64.png"
+footer: "Discord Spigot Update Bot by JEFF Media GbR / mfnalex"
+footer-icon: "https://static.jeff-media.com/img/discord-spigot-update-bot/logo.svg"

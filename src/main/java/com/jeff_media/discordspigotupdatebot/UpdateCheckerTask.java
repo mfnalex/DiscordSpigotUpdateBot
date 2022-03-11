@@ -1,8 +1,9 @@
 package com.jeff_media.discordspigotupdatebot;
 
+import ch.qos.logback.classic.Logger;
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.discord.DiscordManager;
-import org.slf4j.Logger;
+import com.jeff_media.discordspigotupdatebot.spiget.PluginRemovedException;
 
 import java.util.Map;
 import java.util.TimerTask;
@@ -19,6 +20,7 @@ public class UpdateCheckerTask extends TimerTask {
         logger.debug("Checking for updates...");
         for(final String name : plugins.keySet()) {
             final Plugin oldPlugin = plugins.get(name);
+            if(oldPlugin.id() == -1) continue;
             try {
                 final Plugin newPlugin = Plugin.fromSpiget(oldPlugin);
                 logger.debug("Got answer for " + name + ": " + newPlugin);
@@ -31,12 +33,21 @@ public class UpdateCheckerTask extends TimerTask {
                     if (!oldPlugin.version().equals(Plugin.UNDEFINED_VERSION) || main.getConfig().getAnnounceNewPlugins()) {
                         discordManager.sendUpdateEmbed(newPlugin);
                     }
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     logger.warn("Could not send embed to Discord", exception);
                 }
                 main.savePluginsToFile();
-            } catch (Exception exception) {
-                logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.");
+            } catch (final Exception exception) {
+                if(exception instanceof PluginRemovedException && oldPlugin.isValid()) {
+                    logger.warn("Plugin " + oldPlugin.name() + " has been deleted from SpigotMC! There's a chance that this plugin contained malicious code! It will now be removed from your plugins.yml.");
+                    if(main.getConfig().getAnnounceDeletedPlugins()) {
+                        discordManager.sendWarningEmbed(oldPlugin);
+                    }
+                    plugins.put(name, new Plugin(name,Plugin.UNDEFINED_VERSION,-1,-1,-1,oldPlugin.thumbnail(),-1));
+                    main.savePluginsToFile();
+                    continue;
+                }
+                logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.",logger.isDebugEnabled() ? exception : null);
             }
         }
     }

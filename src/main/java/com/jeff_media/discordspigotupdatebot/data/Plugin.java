@@ -1,5 +1,6 @@
 package com.jeff_media.discordspigotupdatebot.data;
 
+import com.jeff_media.discordspigotupdatebot.spiget.PluginRemovedException;
 import com.jeff_media.discordspigotupdatebot.spiget.SpigetAPI;
 import lombok.Data;
 import lombok.NonNull;
@@ -34,12 +35,12 @@ public class Plugin {
         return new Plugin(name, version, id, updateId, downloadId, thumbnail, 0);
     }
 
-    public static Plugin fromSpiget(final Plugin plugin) {
+    public static Plugin fromSpiget(final Plugin plugin) throws PluginRemovedException {
         final int id = plugin.id;
         final String name = plugin.name;
         final String thumbnail = plugin.thumbnail;
-        final String version = SPIGET_API.getVersion(id);
         final int downloadId = SPIGET_API.getDownloadId(id);
+        final String version = SPIGET_API.getVersion(id);
         final PluginUpdate lastUpdate = SPIGET_API.getUpdate(id);
         final int updateId = lastUpdate.updateId();
         final long timestamp = lastUpdate.timestamp();
@@ -56,6 +57,10 @@ public class Plugin {
 
     public String getUpdateLink() {
         return getSpigotLink() + "update?update=" + updateId;
+    }
+
+    public boolean isValid() {
+        return !version.equals(UNDEFINED_VERSION) && id > 0 && downloadId > 0 && updateId > 0;
     }
 
     public boolean isNewerThan(final Plugin oldPlugin) {
