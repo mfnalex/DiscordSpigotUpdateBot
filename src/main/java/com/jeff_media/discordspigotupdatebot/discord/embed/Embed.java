@@ -80,7 +80,7 @@ public class Embed {
             return buildEmbed(EMBED);
         }
 
-        private MessageEmbed buildEmbed(Embed embed) {
+        private MessageEmbed buildEmbed(final Embed embed) {
             final EmbedBuilder builder = new EmbedBuilder();
             builder.setTitle(applyPlaceholders(embed.title));
             builder.setDescription(applyPlaceholders(embed.description));

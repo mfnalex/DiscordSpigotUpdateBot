@@ -3,14 +3,12 @@ package com.jeff_media.discordspigotupdatebot.discord;
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.config.DiscordConfig;
 import com.jeff_media.discordspigotupdatebot.discord.embed.Embed;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import javax.security.auth.login.LoginException;
-import java.awt.*;
 
 public class DiscordManager {
 

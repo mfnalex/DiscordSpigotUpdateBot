@@ -8,9 +8,7 @@ import java.nio.file.Files;
 import java.util.Map;
 import java.util.Objects;
 
-public enum YamlUtils {
-    ;
-
+public final class YamlUtils {
     public static Map<String,Object> loadFile(final String fileName) {
         final File file = new File(fileName);
         if(!file.exists()) {
@@ -26,5 +24,4 @@ public enum YamlUtils {
             throw new IllegalArgumentException("Could not parse config.yml file");
         }
     }
-
 }
