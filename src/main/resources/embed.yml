@@ -10,7 +10,7 @@
 # You can use links in most places by using [Text](URL).
 # To disable certain things like title, or description, set them to null (WITHOUT quotes).
 
-title: "Update released: %plugin% %version%"
+title: "Update released: %name% %version%"
 description:
   - "A new update has been released for [%name%](%spigot_link%). Please update soon."
 fields:
@@ -31,6 +31,7 @@ fields:
     inline: true
   - name: "Download"
     text: "[Click here](%download_link%)"
+    inline: true
 thumbnail: "%thumbnail%"
 footer: "Discord Spigot Update Checker by JEFF Media GbR / mfnalex"
 footer-icon: "https://static.jeff-media.com/img/logo_64_64.png"

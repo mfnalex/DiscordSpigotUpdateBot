@@ -27,11 +27,15 @@ public class UpdateCheckerTask extends TimerTask {
                 logger.info("Old version: " + oldPlugin);
                 logger.info("New version: " + newPlugin);
                 plugins.put(name, newPlugin);
-                if (!oldPlugin.version().equals(Plugin.UNDEFINED_VERSION) || main.getConfig().getAnnounceNewPlugins()) {
-                    discordManager.sendUpdateEmbed(newPlugin);
+                try {
+                    if (!oldPlugin.version().equals(Plugin.UNDEFINED_VERSION) || main.getConfig().getAnnounceNewPlugins()) {
+                        discordManager.sendUpdateEmbed(newPlugin);
+                    }
+                } catch (Exception exception) {
+                    logger.warn("Could not send embed to Discord", exception);
                 }
                 main.savePluginsToFile();
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.");
             }
         }

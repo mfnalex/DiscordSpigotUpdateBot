@@ -18,10 +18,12 @@ public class Field {
 
     public static Field deserialize(final Map<String,Object> map) {
         if(!map.containsKey("name") || !map.containsKey("text") || !map.containsKey("inline")) {
-            throw new IllegalArgumentException("Fields must contain \"name\", \"text\" and \"inline\". For blank fields, set \"name\" and \"text\" to an empty string.");
+            throw new IllegalArgumentException("Fields must contain \"name\" and \"text\" and \"inline\". For blank fields, set \"name\" and \"text\" to an empty string (\"\")");
         }
-        final String name = (String) map.get("name");
-        final String text = (String) map.get("text");
+        String name = (String) map.get("name");
+        String text = (String) map.get("text");
+        if(name == null) name = "";
+        if(text == null) text = "";
         final boolean inline = (boolean) map.get("inline");
         return new Field(name, text, inline);
     }
