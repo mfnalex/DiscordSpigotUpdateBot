@@ -48,6 +48,7 @@ public class DiscordSpigotUpdateBot {
         instance = this;
 
         for(final String arg : args) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (arg) {
                 case "--debug":
                     logger.setLevel(Level.ALL);
@@ -75,7 +76,7 @@ public class DiscordSpigotUpdateBot {
         final Map<String,Object> map = YamlUtils.loadFile("plugins.yml");
         for(final Map.Entry<String,Object> entry : map.entrySet()) {
             final String name = entry.getKey();
-            final Map<String,Object> pluginData = (Map<String, Object>) entry.getValue();
+            @SuppressWarnings("unchecked") final Map<String,Object> pluginData = (Map<String, Object>) entry.getValue();
             final Plugin plugin = Plugin.deserialize(name, pluginData);
             logger.debug("Loaded plugin: " + plugin);
             plugins.put(name,plugin);
