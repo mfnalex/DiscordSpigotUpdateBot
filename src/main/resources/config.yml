@@ -1,4 +1,4 @@
-# Interval in seconds between checking attempts.
+# Interval in seconds between checking attempts. Note that Spiget.org caches results for up to 20 minutes.
 # Type: Integer
 # Default: 60
 interval: 60
