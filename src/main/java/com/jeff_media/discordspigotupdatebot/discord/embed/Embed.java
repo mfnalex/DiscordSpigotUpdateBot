@@ -92,7 +92,10 @@ public class Embed {
                 }
             }
 
-            builder.setThumbnail(applyPlaceholders(embed.thumbnail));
+            final String thumbnail = applyPlaceholders(embed.thumbnail);
+            if(!thumbnail.isEmpty()) {
+                builder.setThumbnail(thumbnail);
+            }
             builder.setFooter(applyPlaceholders(embed.footer), applyPlaceholders(embed.footerIcon));
 
             return builder.build();
