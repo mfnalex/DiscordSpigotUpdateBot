@@ -6,9 +6,55 @@ AngelChest Plus:
   # Type: Integer
   # REQUIRED
   id: 88214
+  # Thumbnail to show on Discord. Can be removed or set to null to not show any thumbnail.
+  # Type: STRING
+  # Default: null
   thumbnail: "https://static.jeff-media.com/img/angelchest/64.png"
 AngelChest Free:
   id: 60383
   thumbnail: "https://static.jeff-media.com/img/angelchest/64.png"
 ChestSort:
   id: 59773
+  thumbnail: "https://static.jeff-media.com/img/chestsort/64.png"
+Jukebox Plus:
+  id: 87750
+  thumbnail: "https://static.jeff-media.com/img/jukeboxplus/64.png"
+AutoComposter:
+  id: 95013
+  thumbnail: "https://static.jeff-media.com/img/autocomposter/64.png"
+LumberJack:
+  id: 60306
+  thumbnail: "https://static.jeff-media.com/img/lumberjack/64.png"
+Filtered Hoppers:
+  id: 96037
+  thumbnail: "https://static.jeff-media.com/img/filteredhoppers/64.png"
+InvUnload:
+  id: 60095
+  thumbnail: "https://static.jeff-media.com/img/invunload/64.png"
+AutoShulker:
+  id: 89807
+  thumbnail: "https://static.jeff-media.com/img/autoshulker/64.png"
+BetterTridents:
+  id: 92656
+  thumbnail: "https://static.jeff-media.com/img/bettertridents/64.png"
+Drop2Inventory Plus:
+  id: 87784
+  thumbnail: "https://static.jeff-media.com/img/drop2inventory/64.png"
+BetterLogStrip:
+  id: 99456
+  thumbnail: "https://static.jeff-media.com/img/betterlogstrip/64.png"
+RePlant:
+  id: 92668
+  thumbnail: "https://static.jeff-media.com/img/replant/64.png"
+Doors Reloaded:
+  id: 91722
+  thumbnail: "https://static.jeff-media.com/img/doorsreloaded/64.png"
+BestTools:
+  id: 81490
+  thumbnail: "https://static.jeff-media.com/img/besttools/64.png"
+LightPerms:
+  id: 62447
+  thumbnail: "https://static.jeff-media.com/img/lightperms/64.png"
+Drop2Inventory Free:
+  id: 62214
+  thumbnail: "https://static.jeff-media.com/img/drop2inventory/64.png"
