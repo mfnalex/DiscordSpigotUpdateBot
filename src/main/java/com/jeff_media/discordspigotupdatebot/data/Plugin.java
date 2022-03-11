@@ -1,16 +1,28 @@
 package com.jeff_media.discordspigotupdatebot.data;
 
 import com.jeff_media.discordspigotupdatebot.spiget.SpigetAPI;
+import lombok.Data;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public record Plugin(String name, String version, int id, int updateId, int downloadId, String thumbnail, long timestamp) {
+@Data
+@Accessors(fluent = true)
+public class Plugin {
+
+    private final String name;
+    private final String version;
+    private final int id;
+    private final int updateId;
+    private final int downloadId;
+    private final String thumbnail;
+    private final long timestamp;
 
     public static final String UNDEFINED_VERSION = "UNDEFINED";
-    private static final SpigetAPI spigetApi = new SpigetAPI();
+    private static final SpigetAPI SPIGET_API = new SpigetAPI();
     private static final String SPIGOT = "https://www.spigotmc.org/";
 
     public static Plugin deserialize(@NonNull final String name, @NonNull final Map<String,Object> map) {
@@ -26,9 +38,9 @@ public record Plugin(String name, String version, int id, int updateId, int down
         final int id = plugin.id;
         final String name = plugin.name;
         final String thumbnail = plugin.thumbnail;
-        final String version = spigetApi.getVersion(id);
-        final int downloadId = spigetApi.getDownloadId(id);
-        final PluginUpdate lastUpdate = spigetApi.getUpdate(id);
+        final String version = SPIGET_API.getVersion(id);
+        final int downloadId = SPIGET_API.getDownloadId(id);
+        final PluginUpdate lastUpdate = SPIGET_API.getUpdate(id);
         final int updateId = lastUpdate.updateId();
         final long timestamp = lastUpdate.timestamp();
         return new Plugin(name, version, id, updateId, downloadId, thumbnail, timestamp);

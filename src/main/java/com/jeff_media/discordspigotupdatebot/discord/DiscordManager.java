@@ -47,6 +47,8 @@ public class DiscordManager {
         eb.addField("Changelog",getLink(plugin.getUpdateLink()), true);
         eb.addField("Download",getLink(plugin.getDownloadLink()), true);
 
+        eb.setFooter("DiscordSpigotUpdateBot by JEFF Media GbR / mfnalex");
+
         if(plugin.thumbnail() != null) {
             eb.setThumbnail(plugin.thumbnail());
         }

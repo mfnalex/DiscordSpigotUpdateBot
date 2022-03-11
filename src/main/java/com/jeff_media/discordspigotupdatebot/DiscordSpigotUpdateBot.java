@@ -40,7 +40,7 @@ public class DiscordSpigotUpdateBot {
         DUMPER_OPTIONS.setPrettyFlow(true);
     }
 
-    public DiscordSpigotUpdateBot(String[] args) {
+    public DiscordSpigotUpdateBot(final String[] args) {
 
         if(instance != null) {
             throw new IllegalStateException("Already initialized");
@@ -49,12 +49,15 @@ public class DiscordSpigotUpdateBot {
 
         for(final String arg : args) {
             switch (arg) {
-                case "--debug" ->  logger.setLevel(Level.ALL);
-                default -> throw new IllegalArgumentException("Unknown argument: " + arg);
+                case "--debug":
+                    logger.setLevel(Level.ALL);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown argument: " + arg);
             }
         }
 
-        logger.info("Loading " + PROPERTIES.getProperty("name") + " v" + PROPERTIES.getProperty("version") + " by mfnalex");
+        logger.info("Loading " + PROPERTIES.getProperty("name") + " v" + PROPERTIES.getProperty("version") + " by JEFF Media GbR / mfnalex");
         logger.info("GitHub: https://github.com/JEFF-Media-GbR/DiscordSpigotUpdateBot");
         logger.info("");
 

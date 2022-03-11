@@ -1,4 +1,11 @@
 package com.jeff_media.discordspigotupdatebot.data;
 
-public record PluginUpdate(int updateId, long timestamp) {
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+@Data
+@Accessors(fluent = true)
+public class PluginUpdate {
+    private final int updateId;
+    private final long timestamp;
 }
