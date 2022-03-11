@@ -1,9 +1,9 @@
 package com.jeff_media.discordspigotupdatebot;
 
+import ch.qos.logback.classic.Logger;
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.discord.DiscordManager;
 import com.jeff_media.discordspigotupdatebot.spiget.PluginRemovedException;
-import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.TimerTask;
@@ -39,7 +39,7 @@ public class UpdateCheckerTask extends TimerTask {
                 main.savePluginsToFile();
             } catch (final Exception exception) {
                 if(exception instanceof PluginRemovedException && oldPlugin.isValid()) {
-                    logger.warn("Plugin " + oldPlugin.name() + " has been removed from SpigotMC!");
+                    logger.warn("Plugin " + oldPlugin.name() + " has been deleted from SpigotMC! There's a chance that this plugin contained malicious code! It will now be removed from your plugins.yml.");
                     if(main.getConfig().getAnnounceDeletedPlugins()) {
                         discordManager.sendWarningEmbed(oldPlugin);
                     }
@@ -47,7 +47,7 @@ public class UpdateCheckerTask extends TimerTask {
                     main.savePluginsToFile();
                     continue;
                 }
-                logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.");
+                logger.warn("Could not fetch updates for plugin " + name + ". Please check if the given ID (" + oldPlugin.id() + ") is correct. If this plugin has been uploaded to SpigotMC recently, do not worry, it'll work soon.",logger.isDebugEnabled() ? exception : null);
             }
         }
     }
