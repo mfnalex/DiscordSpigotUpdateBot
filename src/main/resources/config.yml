@@ -3,7 +3,7 @@
 # Default: 60
 interval: 60
 
-# Minimum delay in milliseconds between Spiget.org requests.
+# Minimum delay in milliseconds between Spiget.org requests. Every plugin causes 3 HTTP requests.
 # Type: Integer
 # Default: 1000
 minimum-delay-between-spiget-requests: 1000
