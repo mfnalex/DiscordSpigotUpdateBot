@@ -21,7 +21,10 @@ Available arguments:
 | --debug   | Raises the log level |
 
 ## Screenshots
-![](https://static.jeff-media.com/img/discord-spigot-update-bot/discord-spigot-update-bot-screenshot1.png)
+
+Embeds are 100% customizable!
+
+![](https://static.jeff-media.com/img/discord-spigot-update-bot/discordspigotupdatecheckerscreenshot2.png)
 
 ## Support
 
