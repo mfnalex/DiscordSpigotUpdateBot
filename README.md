@@ -2,6 +2,8 @@ A Discord Bot to announce SpigotMC plugin updates on your Discord server. It's m
 
 It uses Spiget.org to fetch version information.
 
+[SpigotMC page](https://www.spigotmc.org/resources/discord-spigot-update-bot.100614/)
+
 ## Usage
 
 Run the bot using Java 8 or higher: 
