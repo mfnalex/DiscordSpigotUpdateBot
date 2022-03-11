@@ -36,6 +36,15 @@ public class DiscordManager {
         return jda.getChannelById(MessageChannel.class, channelId);
     }
 
+    public void sendWarningEmbed(final Plugin plugin) {
+        final MessageEmbed embed = new Embed.Builder(plugin).buildWarning();
+        final MessageChannel channel = getChannel();
+        if(channel == null) {
+            throw new IllegalStateException("Channel does not exist anymore");
+        }
+        channel.sendMessageEmbeds(embed).queue();
+    }
+
     public void sendUpdateEmbed(final Plugin plugin) {
         final MessageEmbed embed = new Embed.Builder(plugin).build();
         final MessageChannel channel = getChannel();

@@ -1,0 +1,14 @@
+# Available placeholders:
+#   %name%              - Plugin name as defined in plugins.yml, e.g. "AngelChest Plus"
+#   %thumbnail%         - URL to plugin's thumbnail
+
+# You can use links in most places by using [Text](URL).
+# To disable certain things like title, or description, set them to null (WITHOUT quotes).
+
+title: "Warning: %name% has been deleted!"
+description:
+  - "**Warning: %name% has been deleted from SpigotMC.org!**"
+  - ""
+  - "*This usually indicates that this plugin violated the SpigotMC rules. A common reason for this is when the plugin contained malware or other malicious code! Please check your SpigotMC notifications to see why this plugin has been deleted!*"
+thumbnail: "https://static.jeff-media.com/img/warning_64.png"
+footer: "Discord Spigot Update Bot by JEFF Media GbR / mfnalex"

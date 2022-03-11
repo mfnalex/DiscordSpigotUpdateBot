@@ -19,4 +19,8 @@ public class Config {
     public boolean getAnnounceNewPlugins() {
         return (boolean) config.getOrDefault("announce-new-plugins",false);
     }
+
+    public boolean getAnnounceDeletedPlugins() {
+        return (boolean) config.getOrDefault("announce-deleted-plugins",true);
+    }
 }

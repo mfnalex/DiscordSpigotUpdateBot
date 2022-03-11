@@ -1,5 +1,6 @@
 package com.jeff_media.discordspigotupdatebot.spiget;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jeff_media.discordspigotupdatebot.DiscordSpigotUpdateBot;
 import com.jeff_media.discordspigotupdatebot.data.PluginUpdate;
@@ -31,9 +32,15 @@ public class SpigetAPI {
         return new PluginUpdate(updateId, timestamp);
     }
 
-    public int getDownloadId(final long id) {
+    public int getDownloadId(final long id) throws PluginRemovedException {
         final String response = getHttp(String.format(API_RESOURCE_DETAILS,id));
-        final String downloadPath = JsonParser.parseString(response).getAsJsonObject().getAsJsonObject("file").getAsJsonPrimitive("url").getAsString();
+        final JsonObject object = JsonParser.parseString(response).getAsJsonObject();
+        if(object.has("error")) {
+            if(object.getAsJsonPrimitive("error").getAsString().equals("resource not found")) {
+                throw new PluginRemovedException();
+            }
+        }
+        final String downloadPath = object.getAsJsonObject("file").getAsJsonPrimitive("url").getAsString();
         final String[] split = downloadPath.split("=");
         return Integer.parseInt(split[split.length-1]);
     }

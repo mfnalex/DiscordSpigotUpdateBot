@@ -1,7 +1,6 @@
 package com.jeff_media.discordspigotupdatebot.discord.embed;
 
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
-import com.jeff_media.discordspigotupdatebot.discord.DiscordManager;
 import com.jeff_media.discordspigotupdatebot.util.MessageUtils;
 import com.jeff_media.discordspigotupdatebot.util.YamlUtils;
 import lombok.Data;
@@ -63,18 +62,29 @@ public class Embed {
     public static class Builder {
 
         private static final Map<String,Object> YAML = YamlUtils.loadFile("embed.yml");
+        private static final Map<String,Object> YAML_WARNING = YamlUtils.loadFile("embed-warning.yml");
         private static final Embed EMBED = Embed.deserialize(YAML);
+        private static final Embed EMBED_WARNING = Embed.deserialize(YAML_WARNING);
+        
         private final Plugin plugin;
 
         private String applyPlaceholders(final String text) {
             return MessageUtils.applyPlaceholders(plugin, text);
         }
+        
+        public MessageEmbed buildWarning() {
+            return buildEmbed(EMBED_WARNING);
+        }
 
         public MessageEmbed build() {
+            return buildEmbed(EMBED);
+        }
+
+        private MessageEmbed buildEmbed(Embed embed) {
             final EmbedBuilder builder = new EmbedBuilder();
-            builder.setTitle(applyPlaceholders(EMBED.title));
-            builder.setDescription(applyPlaceholders(EMBED.description));
-            for (final Field field : EMBED.fields) {
+            builder.setTitle(applyPlaceholders(embed.title));
+            builder.setDescription(applyPlaceholders(embed.description));
+            for (final Field field : embed.fields) {
                 if (field.isBlank()) {
                     builder.addBlankField(field.inline());
                 } else {
@@ -82,8 +92,8 @@ public class Embed {
                 }
             }
 
-            builder.setThumbnail(applyPlaceholders(EMBED.thumbnail));
-            builder.setFooter(applyPlaceholders(EMBED.footer), applyPlaceholders(EMBED.footerIcon));
+            builder.setThumbnail(applyPlaceholders(embed.thumbnail));
+            builder.setFooter(applyPlaceholders(embed.footer), applyPlaceholders(embed.footerIcon));
 
             return builder.build();
         }

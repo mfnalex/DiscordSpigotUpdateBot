@@ -13,3 +13,7 @@ minimum-delay-between-spiget-requests: 1000
 # Type: boolean
 # Default: false
 announce-new-plugins: false
+
+# Whether to announce plugins that have been removed from SpigotMC.
+# A plugin is only considered to be removed if a valid update check for this plugin has succeeded in the past.
+announce-deleted-plugins: true
