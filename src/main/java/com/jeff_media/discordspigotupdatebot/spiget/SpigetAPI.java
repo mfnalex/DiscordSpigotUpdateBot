@@ -20,6 +20,7 @@ public class SpigetAPI {
 
     private final int minimumRequestDelay = DiscordSpigotUpdateBot.getInstance().getConfig().getMinimumSpigetDelay();
     private long lastRequest = 0;
+    private final OkHttpClient client = new OkHttpClient().newBuilder().build();
 
     public String getVersion(final long id) {
         final String response = getHttp(String.format(API_LAST_VERSION,id));
@@ -48,8 +49,6 @@ public class SpigetAPI {
 
     private String getHttp(final String url) {
         waitIfNeeded();
-        final OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
         final Request request = new Request.Builder()
                 .url(url)
                 .header("User-Agent","DiscordSpigotUpdateBot/1.0")
@@ -57,10 +56,7 @@ public class SpigetAPI {
                 .build();
         try (final Response response = client.newCall(request).execute();
              final ResponseBody body = Objects.requireNonNull(response.body());) {
-            final String responseString = body.string();
-            body.close();
-            response.close();
-            return responseString;
+            return Objects.requireNonNull(body.string());
         } catch (final IOException e) {
             throw new IllegalStateException("Could not get API response:",e);
         }

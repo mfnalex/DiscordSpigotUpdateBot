@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1
+- Fixed memory leak (sorry, this was my first time using OkHttpClient)
+
 ## 1.1.0
 - Made Discord embed message 100% configurable
 - Added warning for deleted plugins (optional)
