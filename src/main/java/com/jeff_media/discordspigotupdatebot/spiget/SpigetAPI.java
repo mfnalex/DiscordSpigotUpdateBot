@@ -7,6 +7,7 @@ import com.jeff_media.discordspigotupdatebot.data.PluginUpdate;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -54,9 +55,12 @@ public class SpigetAPI {
                 .header("User-Agent","DiscordSpigotUpdateBot/1.0")
                 .method("GET", null)
                 .build();
-        try {
-            final Response response = client.newCall(request).execute();
-            return Objects.requireNonNull(response.body()).string();
+        try (final Response response = client.newCall(request).execute();
+             final ResponseBody body = Objects.requireNonNull(response.body());) {
+            final String responseString = body.string();
+            body.close();
+            response.close();
+            return responseString;
         } catch (final IOException e) {
             throw new IllegalStateException("Could not get API response:",e);
         }

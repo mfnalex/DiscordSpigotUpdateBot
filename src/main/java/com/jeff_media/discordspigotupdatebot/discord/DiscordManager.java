@@ -1,5 +1,6 @@
 package com.jeff_media.discordspigotupdatebot.discord;
 
+import com.jeff_media.discordspigotupdatebot.DiscordSpigotUpdateBot;
 import com.jeff_media.discordspigotupdatebot.data.Plugin;
 import com.jeff_media.discordspigotupdatebot.config.DiscordConfig;
 import com.jeff_media.discordspigotupdatebot.discord.embed.Embed;
@@ -14,6 +15,7 @@ public class DiscordManager {
 
     private final JDA jda;
     private final String channelId;
+    private static final DiscordSpigotUpdateBot main = DiscordSpigotUpdateBot.getInstance();
 
     public DiscordManager() {
         final DiscordConfig discordConfig = new DiscordConfig();
@@ -28,6 +30,7 @@ public class DiscordManager {
             jda.shutdown();
             throw new IllegalStateException("Could not find message channel, check your channel-id in discord.yml (current value: " + channelId+")");
         }
+
     }
 
     private MessageChannel getChannel() {
