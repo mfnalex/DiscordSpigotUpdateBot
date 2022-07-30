@@ -54,8 +54,14 @@ public class SpigetAPI {
                 .header("User-Agent","DiscordSpigotUpdateBot/1.0")
                 .method("GET", null)
                 .build();
+        if(DiscordSpigotUpdateBot.isRidiculouslyVerbose()) {
+            DiscordSpigotUpdateBot.getLogger().debug("Querying Spiget: " + request.url());
+        }
         try (final Response response = client.newCall(request).execute();
              final ResponseBody body = Objects.requireNonNull(response.body());) {
+            if(DiscordSpigotUpdateBot.isRidiculouslyVerbose()) {
+                DiscordSpigotUpdateBot.getLogger().debug("Response: " + body.string());
+            }
             return Objects.requireNonNull(body.string());
         } catch (final IOException e) {
             throw new IllegalStateException("Could not get API response:",e);

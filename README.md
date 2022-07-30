@@ -18,9 +18,10 @@ You can now add plugins to the plugins.yml file, then start the bot again.
 
 Available arguments:
 
-| Parameter | Description          |
-|-----------|----------------------|
-| --debug   | Raises the log level |
+| Parameter | Description                                 |
+|-----------|---------------------------------------------|
+| --debug   | Raises the log level                        |
+| --debug2  | Raises the log level to a ridiculous amount |
 
 ## Screenshots
 

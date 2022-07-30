@@ -24,6 +24,7 @@ public class DiscordSpigotUpdateBot {
     @Getter private final Config config = new Config();
     @Getter private final DiscordManager discordManager;
     @Getter private Map<String, Plugin> plugins;
+    @Getter private static boolean ridiculouslyVerbose = false;
     private static final Properties PROPERTIES = new Properties();
     private static final DumperOptions DUMPER_OPTIONS = new DumperOptions();
 
@@ -52,6 +53,10 @@ public class DiscordSpigotUpdateBot {
             switch (arg) {
                 case "--debug":
                     logger.setLevel(Level.ALL);
+                    break;
+                case "--debug2":
+                    logger.setLevel(Level.ALL);
+                    ridiculouslyVerbose = true;
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown argument: " + arg);
